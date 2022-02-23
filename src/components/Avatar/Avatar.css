@@ -1,0 +1,8 @@
+.container {
+  min-width: 50px;
+  height: 50px;
+  font: 25px bold;
+  border-radius: 50px;
+  color: var(--read-bg);
+  background-color: var(--accent);
+}

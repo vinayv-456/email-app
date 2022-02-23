@@ -1,0 +1,30 @@
+.email-item-container {
+  padding: 20px 10px;
+
+  cursor: pointer;
+}
+
+.email-item-container + .email-item-container {
+  margin-top: 20px;
+}
+
+.content-container {
+  margin-left: 15px;
+}
+
+.read {
+  background-color: var(--read-bg);
+}
+
+.unread {
+  background-color: var(--normal-bg);
+}
+
+.favorite {
+  color: var(--accent);
+  margin-left: 10px;
+}
+
+.ActiveEmailItem {
+  border: 1px solid var(--accent);
+}

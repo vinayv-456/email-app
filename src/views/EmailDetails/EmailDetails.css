@@ -1,0 +1,8 @@
+.email-body-container {
+  margin: 0px 30px;
+  background: var(--normal-bg);
+  padding: 20px 10px;
+  min-width: 70%;
+  min-height: calc(100vh - 150px);
+  height: fit-content;
+}

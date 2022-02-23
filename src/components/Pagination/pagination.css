@@ -1,0 +1,18 @@
+.pagination-container {
+  display: flex;
+  align-items: center;
+}
+
+.pagination-container img {
+  cursor: pointer;
+}
+
+.page-arrow {
+  width: 4rem;
+  cursor: pointer;
+}
+
+.pagination-container img.disable {
+  opacity: 0.2;
+  cursor: not-allowed;
+}

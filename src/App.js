@@ -1,23 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import { useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import "./App.css";
+
+import {
+  getEmails,
+  setActiveEmailItem,
+  setEmailCategory,
+} from "./store/emailsList/actions";
+import EmailDetails from "./views/EmailDetails/EmailDetails.view";
+import EmailsList from "./views/EmailsList/EmailsList.view";
+import Header from "./views/Header/Header.view";
 
 function App() {
+  const dispatch = useDispatch();
+  const { activeEmailItem, emailsList, activeEmailFilter, filters } =
+    useSelector((state) => state.emailsListData);
+
+  // fetching emails
+  const handlePageChange = (currentPage) => {
+    dispatch(setActiveEmailItem(""));
+    dispatch(getEmails(currentPage));
+  };
+
+  // adding to read array
+  const handleAddItemInCategory = useCallback(
+    (category, id) => {
+      if (!filters[category].includes(id)) {
+        dispatch(
+          setEmailCategory({
+            catgeory: category,
+            id: id,
+          })
+        );
+      }
+    },
+    [dispatch, filters]
+  );
+
+  const filteredEmailsList =
+    activeEmailFilter &&
+    emailsList?.list?.filter((item) => {
+      return filters[activeEmailFilter].includes(item.id);
+    });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-container">
+      <Header />
+      <div className="flex" style={{ flex: 1 }}>
+        <EmailsList
+          emailsList={activeEmailFilter ? filteredEmailsList : emailsList?.list}
+          total={
+            activeEmailFilter ? filteredEmailsList?.length : emailsList.total
+          }
+          activeEmailItem={activeEmailItem}
+          handleAddItemInCategory={handleAddItemInCategory}
+          handlePageChange={handlePageChange}
+        />
+        {activeEmailItem && (
+          <EmailDetails handleAddItemInCategory={handleAddItemInCategory} />
+        )}
+      </div>
     </div>
   );
 }
